@@ -1,0 +1,29 @@
+PODS:
+  - Bursts (1.0.1)
+  - DZNEmptyDataSet (1.8.1)
+  - Hero (1.6.1)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - Bursts
+  - DZNEmptyDataSet
+  - Hero
+  - SnapKit
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - SnapKit
+  trunk:
+    - Bursts
+    - DZNEmptyDataSet
+    - Hero
+
+SPEC CHECKSUMS:
+  Bursts: f7841bb24d5a0dd601af8497fac29f212e6f0347
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 52021b45b5c1e8e4a577ad6552909422afd192d2
+
+COCOAPODS: 1.10.1

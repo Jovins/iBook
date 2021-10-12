@@ -1,0 +1,6 @@
+framework module Bursts {
+  umbrella header "Bursts-umbrella.h"
+
+  export *
+  module * { export * }
+}
