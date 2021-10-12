@@ -195,7 +195,7 @@ printInteractionController.printingItem = self.document?.dataRepresentation()
 printInteractionController.present(animated: true, completionHandler: nil)
 ```
 
-## 浏览历史
+## 阅读历史
 
 <img src="Resources/7.png" style="width: 300px; height: 640px;" width="300" height="640"></img>&nbsp;<img src="Resources/6.png" style="width: 300px; height: 640px;" width="300" height="640"></img><br>
 
