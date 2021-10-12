@@ -2,9 +2,7 @@
 About PDFKit learning project on iOS 11, Like iBooks.app.
 
 ## 书库
-<img src="Resources/1.png" style="width: 300px; height: 640px;" width="300" height="640"></img>&nbsp;<img src="Resources/8.png" style="width: 300px; height: 640px;" width="300" height="640"></img><br>
-
-> 两者之间的写法会有一些问题，下面在问题部分有说明。
+<img src="Resources/1.png" style="width: 300px; height: 640px;" width="300" height="640"></img>
 
 书库页面获取PDF相关数据, 可以通过KVC获取。
 
@@ -47,6 +45,55 @@ if let page = document.page(at: 0), let key = document.documentURL as NSURL? {
     }
 }
 ```
+
+初始化一个DocumentModel模型存储PDFDocument数据。
+
+```swift
+struct DocumentModel {
+    
+    var title: String = ""
+    var author: String = ""
+    var coverImage: UIImage?
+    var url: URL?
+}
+```
+```swift
+class BookManager {
+    
+    static let shared = BookManager()
+    
+    func getDocument(_ pdfDoc: PDFDocument?) -> DocumentModel {
+        
+        var model = DocumentModel()
+        if let document = pdfDoc, let documentAttributes = document.documentAttributes {
+            if let title = documentAttributes["Title"] as? String {
+                model.title = title
+            } else {
+                model.title = "No Title"
+            }
+            
+            if let author = documentAttributes["Author"] as? String {
+                model.author = author
+            } else {
+                model.author = "No Author"
+            }
+            
+            if document.pageCount > 0, let page = document.page(at: 0) {
+                let imgWidth: CGFloat = (UIScreen.main.bounds.width - 48)/2 - 24
+                let imgHeight: CGFloat = 190
+                let thumbnail = page.thumbnail(of: CGSize(width: imgWidth, height: imgHeight), for: .cropBox)
+                model.coverImage = thumbnail
+            }
+            
+            if let url = document.documentURL {
+                model.url = url
+            }
+        }
+        return model
+    }
+}
+```
+
 
 ## PDF浏览
 
@@ -144,8 +191,8 @@ if let page = self.document?.page(at: pageNumber) {
 
 ```swift
 let printInteractionController = UIPrintInteractionController.shared
-        printInteractionController.printingItem = self.document?.dataRepresentation()
-        printInteractionController.present(animated: true, completionHandler: nil)
+printInteractionController.printingItem = self.document?.dataRepresentation()
+printInteractionController.present(animated: true, completionHandler: nil)
 ```
 
 ## 浏览历史
@@ -218,10 +265,6 @@ func didMatchString(_ instance: PDFSelection) {
     self.tableView.reloadData()
 }
 ```
-
-## 问题
-
-在书库部分有两张列表展示页，图一搜索时会闪退，图二则不会。问题是出在图一中我已经通过`URL`获取到`PDFDocument`列表数据，而且通过KVC获取到书名和作者的相关信息展示出来。那么在搜索时则会出现内存暴增闪退(这个问题我暂时也不知道原因)。图二则是简单通过URL来展示信息，在浏览PDF时才通过`PDFDocument`获取相关数据。
 
 ## 未来
 
